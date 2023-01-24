@@ -1,72 +1,49 @@
-# IQ Simulations
+# ROS ve Gazebo Simulasyon
 
-This repo hosts gazebo worlds for various drone scenarios and various drone configurations. This Repo is specifically designed to work with the Ardupilot control system, and utilizes the ardupilot gazebo plugin to allow the ardupilot control software to interface and control the model drone in gazebo. 
+Bu repo, çeşitli drone senaryoları ve çeşitli drone konfigürasyonları için gazebo dünyalarına ev sahipliği yapıyor. Bu Repo, Ardupilot kontrol sistemi ile çalışmak üzere özel olarak tasarlanmıştır ve ardupilot kontrol yazılımının gazebo'da model drone ile arayüz oluşturmasına ve kontrol etmesine izin vermek için ardupilot gazebo eklentisini kullanır.
 
-## Vehicles Supported 
+## Desteklenen Araçlar
 
 - [Quadcopters](#drone-simulations)
 - [Quad-Planes](#quad-planes)
 - [Boats](#boat-simulation)
+- [Plane](#plane-simulation)
 
-## Community Discord Server
+## Bağımlılıklar 
 
-Come be a part of the growing community of drone application developers! Join the conversation in our [discord](https://discord.gg/xZjXaAf).
+- Ardupilot SITL ve MAVProxy
+- Gazebo ve ArduPilot eklentisi
 
-## IQ Tutorials
-This Repo is part of the Intelligent Quads Software Development tutorial series. Please take a look at the following resources to learn more about how to use this repository.
-
-[Intelligent Quads Text Tutorials](https://github.com/Intelligent-Quads/iq_tutorials)
-
-[Intelligent Quads Video Tutorials](https://www.youtube.com/channel/UCuZy0c-uvSJglnZfQC0-uaQ)
-
-
-## Dependencies 
-
-Take a look at these tutorials to setup ardupilot, gazebo and the ardupilot gazebo plugin 
-
-[Installing Ardupilot and MAVProxy](https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/Installing_Ardupilot.md)
-
-[Installing QGroundControl](https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/installing_qgc.md)
-
-[Installing Gazebo and ArduPilot Plugin](https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/installing_gazebo_arduplugin.md)
-
-Installing x-term is recommended as it allows the ardupilot sitl interface to run in a terminal that will cleanly close when closing you sitl instance
-```
-sudo apt install xterm
-```
-
-## Drone Simulations 
+## Drone Simulasyonu 
 
 ![runway world](docs/imgs/runway.jpg)
 
-This repo contains a couple different gazebo worlds containing various ardupilot drone configurations. The worlds are listed below
+Bu depo, çeşitli ardupilot drone konfigürasyonları içeren birkaç farklı gazebo world dosyası içerir. Bu dünyalar aşağıda listelenmiştir:
 
-- `droneOnly.world` - simple gazebo world containing only a single drone
-- `runway.world` - simple gazebo world containing only a single drone on a runway
-- `lidar.world` - a simple gazebo world containing a single drone with a 2d lidar sensor
-- `multi_drone.world` - a simple world containing 12 drones  
+- `droneOnly.world` - sadece bir drone içeren basit gazebo world 
+- `runway.world` - sadece bir drone içeren basit asfaltlı bir gazebo world 
+- `lidar.world` - 2d lidar sensörlü tek bir dron içeren basit bir gazebo world
+- `multi_drone.world` - 12 dron içeren basit bir world
 
-### Running Drone Simulations 
+### Drone Simulasyonu Çalıştırma
 
-Each world contains a corresponding launch file. For example to launch `runway.world` run
+Her world, karşılık gelen bir launch dosyası içerir. Örneğin, `runway.world` gazebo world dosyasını başlatmak için (1.Terminal):
 ```
-roslaunch iq_sim runway.launch
+roslaunch ros_gazebo_sim runway.launch
 ``` 
-Launch the ardupilot instance by running 
+Aşağıdaki kod ile Ardupilot SITL çalıştırın (2. Terminal):
 ```
-cd ~/ardupilot/ArduCopter/ && sim_vehicle.py -v ArduCopter -f gazebo-iris --console
+cd ~/ardupilot/Tools/autotest/ && sim_vehicle.py -v ArduCopter -f gazebo-iris --console
 ``` 
-For more information, take a look at the corresponding tutorials [here](https://github.com/Intelligent-Quads/iq_tutorials)
-
 ## Quad Planes 
 
-Quad Planes are a vtol aircraft that uses quadcopter controls in hover and airplane controls in forward flight. 
+Quad Planes, hoverda quadcopter kontrollerini ve ileri uçuşta uçak kontrollerini kullanan bir vtol uçağıdır.
 
 ![vtol pic](docs/imgs/vtol_sim.png)
 
-### Setup 
+### Kurulum 
 
-In order to use the gazebo quad plane sim a few files needed to be modified in ardupilot the first is to add the following to the file `ardupilot/Tools/autotest/pysim/vehicleinfo.py` on line 274. this should be within the Arduplane structure. 
+gazebo quadplane sim'i kullanmak için ardupilot'ta birkaç dosyanın değiştirilmesi gerekiyor, ilki aşağıdakini 274. satırdaki `ardupilot/Tools/autotest/pysim/vehicleinfo.py`dosyasına eklemek. bu Arduplane yapısı içinde olmalıdır.
 
 ```
 "gazebo-quadplane": {
@@ -75,23 +52,21 @@ In order to use the gazebo quad plane sim a few files needed to be modified in a
 },
 ```
 
-copy the file `iq_sim/scripts/vtol-params/gazebo_quadplane.parm` to `ardupilot/Tools/autotest/default_params/gazebo_quadplane.parm`
+copy the file `ros_gazebo_sim/scripts/vtol-params/gazebo_quadplane.parm` to `ardupilot/Tools/autotest/default_params/gazebo_quadplane.parm`
 
-### Running VTOL sim
+### VTOL simulasyon çalıştırma
 
-## Run Boat Sim 
-
-First terminal 
+Birinci Terminal:
 ```
-roslaunch iq_sim vtol.launch
+roslaunch ros_gazebo_sim vtol.launch
 ```
-Second terminal
+İkinci Terminal:
 ```
 sim_vehicle.py -v ArduPlane -f gazebo-quadplane  -m --mav10 --console -I0
 ```
 
 
-## Boat Simulation
+## Tekne Simülasyonu
 
 Recently I have been experimenting with Ardurover for controlling an autonomous boat. Below shows the steps for installing for boat simulation. If you have already installed for quadcopter simulation, then most of the boat installation should already be completed. 
 
@@ -99,16 +74,32 @@ Recently I have been experimenting with Ardurover for controlling an autonomous 
 
 ![river world](docs/imgs/river_world.jpg)
 
-## Run Boat Sim 
+## Tekne Simülasyonu Çalıştırma
 
-First terminal 
+Birinci Terminal:
 ```
-roslaunch iq_sim boat.launch
+roslaunch ros_gazebo_sim boat.launch
 ```
-Second terminal
+İkinci Terminal:
 ```
 sim_vehicle.py -v APMrover2 -f gazebo-rover  -m --mav10 --console -L Viridian
 ```
+
+## Plane Simulasyonu 
+
+- `plane_cam.world` - kameralı bir insansız hava aracı içeren basit gazebo dünyası (zephyr-wing modeli)
+
+### Plane Simulasyonu çalıştırma 
+
+![drone_with_lidar](docs/imgs/plane_with_cam.png)
+Ros ile beraber gazebo açmak için 1.Terminal:
+```
+roslaunch ros_gazebo_sim plane_cam.launch
+``` 
+Arddupilot sitl açmak için 2. Terminal:
+```
+cd ~/ardupilot/Tools/autotest/ && sim_vehicle.py -v ArduPlane -f gazebo-zephyr  -m --mav10 --map --console -I0
+``` 
 
 
 ## IQ_SIM Models
