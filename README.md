@@ -11,9 +11,38 @@ Bu repo, çeşitli drone senaryoları ve çeşitli drone konfigürasyonları iç
 
 ## Bağımlılıklar 
 
-- Ardupilot SITL ve MAVProxy
-- Gazebo ve ArduPilot eklentisi
+İHA için yapay zeka repomdaki kurulum talimatlarını inceleyerek kendi işletim sisteminize ve istediğiniz araca uygun olan aşağıdaki paketleri kurmalısınız:
+- [Ardupilot SITL Kurulumu](https://github.com/furkanisikay/iha-icin-yapayzeka-egitimi/blob/main/dokumanlar/ardupilot-sitl-kurulumu.md)
+- [Gazebo Kurulumu \[***Ubuntu 18.04-20.04 için***\]](https://github.com/furkanisikay/iha-icin-yapayzeka-egitimi/blob/main/dokumanlar/gazebo-kurulumu.md)
+- [Gazebo için Ardupilot Eklentisinin Kurulumu \[***Copter için***\]](https://github.com/furkanisikay/iha-icin-yapayzeka-egitimi/blob/main/dokumanlar/gazebo-icin-apm-eklentisi-kurulumu-copter.md)
+- [Gazebo için Ardupilot Eklentisinin Kurulumu \[***Plane için***\]](https://github.com/furkanisikay/iha-icin-yapayzeka-egitimi/blob/main/dokumanlar/gazebo-icin-apm-eklentisi-kurulumu-plane.md)
+- [ROS (Melodic) ve catkinws Kurulumu \[***Ubuntu 18.04 için***\]](https://github.com/furkanisikay/iha-icin-yapayzeka-egitimi/blob/main/dokumanlar/gazebo-icin-apm-eklentisi-kurulumu-plane.md)
 
+# Kurulum
+> Kuruluma geçmeden önce bağımlılıklar bölümü altındaki gerekli kurulumları yapıp ardından bu bölüme geçmelisiniz.
+Öncelikle repoyu indirelim:
+
+```console
+cd ~/catkin_ws/src
+git clone https://github.com/Intelligent-Quads/iq_sim.git
+```
+gazebo'ya modelleri nerede arayacağını söylemek için:
+```console
+echo "GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:$HOME/catkin_ws/src/ros_gazebo_sim/models" >> ~/.bashrc
+```
+
+## 5. Derlemek için
+`catkin_ws` içinde, `catkin build`i çalıştırın:
+
+```console
+cd ~/catkin_ws && catkin build
+```
+bashrc'yi yenileyin:
+```console
+source ~/.bashrc
+```
+
+# Kullanım
 ## Drone Simulasyonu 
 
 ![runway world](docs/imgs/runway.jpg)
@@ -25,7 +54,7 @@ Bu depo, çeşitli ardupilot drone konfigürasyonları içeren birkaç farklı g
 - `lidar.world` - 2d lidar sensörlü tek bir dron içeren basit bir gazebo world
 - `multi_drone.world` - 12 dron içeren basit bir world
 
-### Drone Simulasyonu Çalıştırma
+### **Drone Simulasyonu Çalıştırma**
 
 Her world, karşılık gelen bir launch dosyası içerir. Örneğin, `runway.world` gazebo world dosyasını başlatmak için (1.Terminal):
 ```
@@ -54,7 +83,7 @@ gazebo quadplane sim'i kullanmak için ardupilot'ta birkaç dosyanın değiştir
 
 copy the file `ros_gazebo_sim/scripts/vtol-params/gazebo_quadplane.parm` to `ardupilot/Tools/autotest/default_params/gazebo_quadplane.parm`
 
-### VTOL simulasyon çalıştırma
+### **VTOL simulasyon çalıştırma**
 
 Birinci Terminal:
 ```
@@ -74,7 +103,7 @@ Recently I have been experimenting with Ardurover for controlling an autonomous 
 
 ![river world](docs/imgs/river_world.jpg)
 
-## Tekne Simülasyonu Çalıştırma
+## **Tekne Simülasyonu Çalıştırma**
 
 Birinci Terminal:
 ```
@@ -89,20 +118,20 @@ sim_vehicle.py -v APMrover2 -f gazebo-rover  -m --mav10 --console -L Viridian
 
 - `plane_cam.world` - kameralı bir insansız hava aracı içeren basit gazebo dünyası (zephyr-wing modeli)
 
-### Plane Simulasyonu çalıştırma 
+### **Plane Simulasyonu çalıştırma **
 
 ![drone_with_lidar](docs/imgs/plane_with_cam.png)
 Ros ile beraber gazebo açmak için 1.Terminal:
 ```
 roslaunch ros_gazebo_sim plane_cam.launch
 ``` 
-Arddupilot sitl açmak için 2. Terminal:
+Ardupilot sitl açmak için 2. Terminal:
 ```
 cd ~/ardupilot/Tools/autotest/ && sim_vehicle.py -v ArduPlane -f gazebo-zephyr  -m --mav10 --map --console -I0
 ``` 
 
 
-## IQ_SIM Models
+## Gazebo modelleri
 
 
 ### drone1-12
