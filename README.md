@@ -28,7 +28,7 @@ git clone https://github.com/Intelligent-Quads/iq_sim.git
 ```
 gazebo'ya modelleri nerede arayacağını söylemek için:
 ```console
-echo "GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:$HOME/catkin_ws/src/ros_gazebo_sim/models" >> ~/.bashrc
+echo "GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:$HOME/catkin_ws/src/iq_sim/models" >> ~/.bashrc
 ```
 
 ## 5. Derlemek için
@@ -58,7 +58,7 @@ Bu depo, çeşitli ardupilot drone konfigürasyonları içeren birkaç farklı g
 
 Her world, karşılık gelen bir launch dosyası içerir. Örneğin, `runway.world` gazebo world dosyasını başlatmak için (1.Terminal):
 ```
-roslaunch ros_gazebo_sim runway.launch
+roslaunch iq_sim runway.launch
 ``` 
 Aşağıdaki kod ile Ardupilot SITL çalıştırın (2. Terminal):
 ```
@@ -81,13 +81,13 @@ gazebo quadplane sim'i kullanmak için ardupilot'ta birkaç dosyanın değiştir
 },
 ```
 
-copy the file `ros_gazebo_sim/scripts/vtol-params/gazebo_quadplane.parm` to `ardupilot/Tools/autotest/default_params/gazebo_quadplane.parm`
+copy the file `iq_sim/scripts/vtol-params/gazebo_quadplane.parm` to `ardupilot/Tools/autotest/default_params/gazebo_quadplane.parm`
 
 ### **VTOL simulasyon çalıştırma**
 
 Birinci Terminal:
 ```
-roslaunch ros_gazebo_sim vtol.launch
+roslaunch iq_sim vtol.launch
 ```
 İkinci Terminal:
 ```
@@ -107,7 +107,7 @@ Recently I have been experimenting with Ardurover for controlling an autonomous 
 
 Birinci Terminal:
 ```
-roslaunch ros_gazebo_sim boat.launch
+roslaunch iq_sim boat.launch
 ```
 İkinci Terminal:
 ```
@@ -123,7 +123,7 @@ sim_vehicle.py -v APMrover2 -f gazebo-rover  -m --mav10 --console -L Viridian
 ![drone_with_lidar](docs/imgs/plane_with_cam.png)
 Ros ile beraber gazebo açmak için 1.Terminal:
 ```
-roslaunch ros_gazebo_sim plane_cam.launch
+roslaunch iq_sim plane_cam.launch
 ``` 
 Ardupilot sitl açmak için 2. Terminal:
 ```
